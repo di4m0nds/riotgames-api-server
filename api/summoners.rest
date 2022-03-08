@@ -1,0 +1,8 @@
+# /summoner is on-line
+GET http://localhost:6969/summoner
+
+# Get ids for summoner
+GET http://localhost:6969/summoner/{region}&{name}
+
+# Get Icon for summoner
+GET http://localhost:6969/summoner/icon/4762
