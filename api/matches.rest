@@ -1,0 +1,5 @@
+//response running
+#GET http://localhost:6969/matches
+
+// Get matches by summoner puuid
+GET http://localhost:6969/matches/americas&ayEQAdHmu1rX4BYrHXUrW2Q-m064QlPToX8CnT6DWSKxb_LkR53_Up_wHL1C7tKkUqg__rs3gW2ebQ&10
