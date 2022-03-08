@@ -6,5 +6,6 @@ app.use(express.json())
 
 app.use('/', routers.main)
 app.use('/summoner', routers.summoner)
+app.use('/matches', routers.matches)
 
 export { app }
