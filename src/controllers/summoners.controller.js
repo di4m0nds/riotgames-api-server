@@ -9,7 +9,7 @@ summonerController.getSummoner = async (req, res) => {
 
   await axios.get(`https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${process.env.RIOT_TOKEN}`)
     .then(response => res.json(response.data))
-    .catch(err => console.log(err))
+    .catch(err => res.json(err.status))
 }
 
 // Get icon by id
