@@ -1,14 +1,23 @@
 import axios from 'axios'
 import 'dotenv/config'
 
+import { getRedisCacheKey, setRedisCacheKey } from '../redis/redisHandler.js'
+
 const summonerController = {}
 
 // Get summoner by region and gamename
 summonerController.getSummoner = async (req, res) => {
   const { region, name } = req.params
+  const cacheKey = `${region}-${name.replace(' ', '').toLowerCase()}`
+
+  const reply = await getRedisCacheKey(cacheKey)
+  if (reply) return res.json(reply)
 
   await axios.get(`https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${process.env.RIOT_TOKEN}`)
-    .then(response => res.json(response.data))
+    .then(async response => {
+      await setRedisCacheKey(cacheKey, response.data)
+      return res.json(response.data)
+    })
     .catch(err => res.json(err.status))
 }
 
