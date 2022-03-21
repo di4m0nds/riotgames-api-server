@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import championsController from '../controllers/champions.controller.js'
+import championsController from '../../controllers/champion/champions.controller.js'
 
 const { getChamps, getChamp, getFreeRotation } = championsController
 const router = Router()
@@ -15,4 +15,4 @@ router.route('/champ/:name')
 router.route('/free/:region')
   .get(getFreeRotation)
 
-export { router as champions }
+export { router as championsV2 }

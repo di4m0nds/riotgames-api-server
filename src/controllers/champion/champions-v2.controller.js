@@ -15,7 +15,7 @@ championsController.getChamp = async (req, res) => {
   const result = await axios.get(`http://ddragon.leagueoflegends.com/cdn/12.5.1/data/en_US/champion/${name}.json`)
     .catch(e => console.error(e))
 
-  res.json(result.data)
+  res.json(result?.data)
 }
 
 championsController.getFreeRotation = async (req, res) => {

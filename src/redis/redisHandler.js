@@ -1,19 +1,22 @@
 import { createClient } from 'redis'
 import { promisify } from 'util'
 
-const client = createClient({
+const redisConfig = {
   host: '127.0.0.1',
   port: 6379,
   legacyMode: true
-})
+}
+const client = createClient(redisConfig)
 
 const GET_CLIENT_ASYNC = promisify(client.get).bind(client)
 const SET_CLIENT_ASYNC = promisify(client.set).bind(client)
 
 const getRedisCacheKey = async (key) => {
+  let reply = JSON.stringify({})
   if (!client.isOpen) await client.connect()
-  const reply = await GET_CLIENT_ASYNC(key)
-  await client.disconnect()
+  reply = await GET_CLIENT_ASYNC(key)
+  if (client.isOpen) await client.disconnect()
+
   if (reply) {
     return JSON.parse(reply)
   } else {
@@ -24,7 +27,25 @@ const getRedisCacheKey = async (key) => {
 const setRedisCacheKey = async (key, value) => {
   if (!client.isOpen) await client.connect()
   await SET_CLIENT_ASYNC(key, JSON.stringify(value))
-  await client.disconnect()
+  if (client.isOpen) await client.disconnect()
 }
 
-export { getRedisCacheKey, setRedisCacheKey }
+const deleteRedisCache = async () => {
+  if (!client.isOpen) await client.connect()
+  client.flushDb((err, succeeded) => {
+    if (err) {
+      console.log('error occured on redisClient.flushdb')
+    } else console.log('✔ purge caches store in redis')
+  })
+}
+
+const deleteRedisKeyCache = async (key) => {
+  if (!client.isOpen) await client.connect()
+  client.del(key, (err, succeeded) => {
+    if (err) {
+      console.log('error occured on redisClient.flushdb')
+    } else console.log('✔ purge caches store in redis')
+  })
+}
+
+export { getRedisCacheKey, setRedisCacheKey, deleteRedisCache, deleteRedisKeyCache }

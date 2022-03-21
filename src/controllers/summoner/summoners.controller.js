@@ -1,7 +1,7 @@
 import axios from 'axios'
 import 'dotenv/config'
 
-import { getRedisCacheKey, setRedisCacheKey } from '../redis/redisHandler.js'
+import { getRedisCacheKey, setRedisCacheKey } from '../../redis/redisHandler.js'
 
 const summonerController = {}
 
@@ -39,6 +39,15 @@ summonerController.getSummonerPuuid = async (req, res) => {
   const { region, puuid } = req.params
 
   await axios.get(`https://${region}.api.riotgames.com/riot/account/v1/accounts/by-puuid/${puuid}?api_key=${process.env.RIOT_TOKEN}`)
+    .then(response => res.json(response.data))
+    .catch(err => console.log(err))
+}
+
+// Get summoner by puuid (region: Americas, Europe, Asia, Esports)
+summonerController.getChampionMastery = async (req, res) => {
+  const { region, id } = req.params
+
+  await axios.get(`https://${region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?api_key=${process.env.RIOT_TOKEN}`)
     .then(response => res.json(response.data))
     .catch(err => console.log(err))
 }

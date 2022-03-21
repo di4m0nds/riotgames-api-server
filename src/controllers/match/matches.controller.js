@@ -1,7 +1,7 @@
 import axios from 'axios'
 import 'dotenv/config'
 
-import { getRedisCacheKey, setRedisCacheKey } from '../redis/redisHandler.js'
+import { getRedisCacheKey, setRedisCacheKey } from '../../redis/redisHandler.js'
 
 const matchesController = {}
 
