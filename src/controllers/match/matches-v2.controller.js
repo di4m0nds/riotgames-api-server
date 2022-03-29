@@ -31,9 +31,12 @@ matchesController.getMatches = async (req, res) => {
   }
   // Filter matches by gameType
   const matchesFiltered = matchesData.filter(game => game.info.gameType === 'MATCHED_GAME' && (game.info.gameMode === 'CLASSIC' || game.info.gameMode === 'ARAM'))
+  // Get Queue
+  const { data: queueIds } = await axios.get('https://static.developer.riotgames.com/docs/lol/queues.json')
 
   // Encrypt Data
-  const matches = matchHelper.matchesModel(matchesFiltered)
+  const matches = matchHelper.matchesModel(matchesFiltered, queueIds)
+
   await setRedisCacheKey(keyOfRedis, matches)
 
   res.json(matches)

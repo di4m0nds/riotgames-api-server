@@ -12,7 +12,7 @@ const summonerController = {}
 // Get summoner by region and gamename
 summonerController.getSummonerShort = async (req, res) => {
   const { region, name } = req.params
-  const summonerName = name.replace(' ', '').toLowerCase()
+  const summonerName = encodeURI(name.replace(' ', '').toLowerCase())
   const summonerRegion = regionHelper.countries[region]
   const keyOfRedis = `SDATA-${summonerRegion}-${summonerName}`
   let version
@@ -51,7 +51,7 @@ summonerController.getSummonerShort = async (req, res) => {
 summonerController.getSummonerLong = async (req, res) => {
   const { region, name } = req.params
   const summonerRegion = regionHelper.countries[region]
-  const summonerName = name.replace(' ', '').toLowerCase()
+  const summonerName = encodeURI(name.replace(' ', '').toLowerCase())
   const keyOfRedis = `EXTDATA-${summonerRegion}-${summonerName}`
   const championMastery = []
   const leagueData = []

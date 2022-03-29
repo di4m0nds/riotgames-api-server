@@ -2,7 +2,7 @@ import { encrypt } from '../crypto/crypto.js'
 
 const matchHelper = {}
 
-matchHelper.matchesModel = (matches) => {
+matchHelper.matchesModel = (matches, queueIds) => {
   const model = []
 
   matches.forEach(current => {
@@ -19,7 +19,7 @@ matchHelper.matchesModel = (matches) => {
       type: current?.info?.gameType,
       patch: current?.info?.gameVersion,
       platformId: current?.info?.platformId,
-      queueId: current?.info?.queueId,
+      queue: queueIds.filter(queue => queue.queueId === current?.info?.queueId)[0],
       participants: current?.info?.participants?.map(player => {
         player.puuid = encrypt(player.puuid)
         player.summonerId = encrypt(player.summonerId)
