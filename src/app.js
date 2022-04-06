@@ -27,6 +27,7 @@ app.use('/api/champions', routers.champions)
 app.use('/srv/lol/api/v2/summoner', routers.summonerV2)
 app.use('/srv/lol/api/v2/matches', routers.matchesV2)
 app.use('/srv/lol/api/v2/champions', routers.championsV2)
+app.use('/srv/lol/api/v2/yt', routers.ytV2)
 
 // Clear Redis Data
 app.get('/srv/clear', async (_, res) => {

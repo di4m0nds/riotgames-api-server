@@ -2,7 +2,9 @@
 #GET http://localhost:6969/summoner
 
 # Get ids for summoner
-GET http://localhost:6969/summoner/la2&die%20hure
+#GET http://localhost:6969/summoner/la2&die%20hure
 
 # Get Icon for summoner
-GET http://localhost:6969/summoner/icon/4762
+#GET http://localhost:6969/summoner/icon/4762
+
+GET http://localhost:6969/srv/lol/api/v2/summoner/sdata/las&die%20hure
